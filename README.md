@@ -1,4 +1,4 @@
-# Translation Manager
+# Word Translation Dashboard
 
 Hey there! 👋 This is my Translation Manager project - a tool I built to make managing multilingual content a breeze. It's perfect for developers who need to handle translations in their apps without the headache.
 
@@ -48,7 +48,7 @@ Pop open [http://localhost:3000](http://localhost:3000) in your browser and you'
 Here's how I've set things up:
 
 ```
-translation-manager/
+Word-Translation-Dashboard/
 ├── app/
 │   ├── components/     # All the reusable bits
 │   ├── context/       # Where the magic happens
