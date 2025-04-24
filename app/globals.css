@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --primary: #00ff9d;
+  --primary-light: #00cc7d;
+  --secondary: #1a1a1a;
+  --text-muted: #888888;
+  --border: #333333;
+  --success: #00ff9d;
+  --error: #ff3e3e;
+  --accent: #00a8ff;
+  --panel: #111111;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+} 
