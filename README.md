@@ -13,6 +13,7 @@ Hey there! 👋 This is my Translation Manager project - a tool I built to make 
 ## What I Used to Build It 🛠️
 
 I built this using some of my favorite tools:
+
 - Next.js 14 (it's awesome!)
 - TypeScript (for that sweet type safety)
 - Tailwind CSS (makes styling a dream)
@@ -22,6 +23,7 @@ I built this using some of my favorite tools:
 ## Let's Get Started! 🚀
 
 First things first, you'll need:
+
 - Node.js (version 18 or newer)
 - npm or yarn (whichever you prefer)
 
@@ -44,6 +46,7 @@ Pop open [http://localhost:3000](http://localhost:3000) in your browser and you'
 ## How It's Organized 📁
 
 Here's how I've set things up:
+
 ```
 translation-manager/
 ├── app/
@@ -60,12 +63,14 @@ translation-manager/
 ## Using It Is a Breeze 🌬️
 
 ### Adding New Translations
+
 1. Head over to the Dashboard
 2. Type in your keyword
 3. Fill in the translations
 4. Hit that "Add Translation" button
 
 ### Managing Your Translations
+
 - Drag stuff around to organize it
 - Click and edit right in place
 - Everything saves automatically (no more "oops, I forgot to save!")
@@ -73,6 +78,7 @@ translation-manager/
 ## Want to Help Out? 🤝
 
 I'd love your help! Here's how you can contribute:
+
 1. Fork this baby
 2. Make your changes
 3. Send it back my way with a pull request
@@ -84,6 +90,7 @@ This project is under the MIT License. Basically, use it however you want, just 
 ## Shoutouts! 🙌
 
 Big thanks to:
+
 - Next.js team for making such a killer framework
 - Tailwind CSS folks for making styling fun again
 - The @hello-pangea/dnd team for the slick drag and drop
@@ -91,7 +98,3 @@ Big thanks to:
 ## Need Help? 🆘
 
 If you run into any issues or have questions, just open an issue on GitHub. I'll do my best to help out!
-
----
-
-Made with lots of coffee ☕ and even more code 💻 by [Your Name]
