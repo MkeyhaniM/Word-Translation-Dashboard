@@ -1,14 +1,21 @@
 "use client";
 
-import { useTranslation, Language } from "../src/context/TranslationContext";
+import { useTranslation } from "../src/context/TranslationContext";
+import { Language } from "../src/constants/languages";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useState } from "react";
 import Navigation from "../src/components/Navigation";
 
 export default function Dashboard() {
-  const { translations, updateTranslation, reorderTranslations } =
-    useTranslation();
+  const {
+    translations,
+    updateTranslation,
+    reorderTranslations,
+    addTranslation,
+  } = useTranslation();
+
   const [newKeyword, setNewKeyword] = useState("");
+
   const [newTranslations, setNewTranslations] = useState({
     en: "",
     es: "",
@@ -18,7 +25,6 @@ export default function Dashboard() {
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
-
     const items = Array.from(translations);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -29,14 +35,19 @@ export default function Dashboard() {
   const handleAddTranslation = () => {
     if (
       newKeyword &&
-      Object.values(newTranslations).some((value) => value.trim() !== "")
+      Object.values(newTranslations).some((val) => val.trim() !== "")
     ) {
-      const id = Date.now().toString();
-      Object.entries(newTranslations).forEach(([lang, translation]) => {
-        if (translation.trim() !== "") {
-          updateTranslation(id, lang as Language, translation);
-        }
+      // filter out only the non‐empty entries:
+      // build this filtered map once…
+      const filtered: Partial<Record<Language, string>> = {};
+      (["en", "es", "fr", "de"] as Language[]).forEach((lang) => {
+        const t = newTranslations[lang];
+        if (t.trim()) filtered[lang] = t;
       });
+
+      // then:
+      addTranslation(newKeyword, filtered);
+
       setNewKeyword("");
       setNewTranslations({ en: "", es: "", fr: "", de: "" });
     }
@@ -72,64 +83,66 @@ export default function Dashboard() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <label className="text-sm text-[var(--text-muted)]">
-                  English
-                </label>
-                <input
-                  type="text"
-                  placeholder="English translation"
-                  value={newTranslations.en}
-                  onChange={(e) =>
-                    handleTranslationChange("en", e.target.value)
-                  }
-                  className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
-                />
+            <form action={handleAddTranslation}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <label className="text-sm text-[var(--text-muted)]">
+                    English
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="English translation"
+                    value={newTranslations.en}
+                    onChange={(e) =>
+                      handleTranslationChange("en", e.target.value)
+                    }
+                    className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="text-sm text-[var(--text-muted)]">
+                    Spanish
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Spanish translation"
+                    value={newTranslations.es}
+                    onChange={(e) =>
+                      handleTranslationChange("es", e.target.value)
+                    }
+                    className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="text-sm text-[var(--text-muted)]">
+                    French
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="French translation"
+                    value={newTranslations.fr}
+                    onChange={(e) =>
+                      handleTranslationChange("fr", e.target.value)
+                    }
+                    className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="text-sm text-[var(--text-muted)]">
+                    German
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="German translation"
+                    value={newTranslations.de}
+                    onChange={(e) =>
+                      handleTranslationChange("de", e.target.value)
+                    }
+                    className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
+                  />
+                </div>
               </div>
-              <div className="space-y-3">
-                <label className="text-sm text-[var(--text-muted)]">
-                  Spanish
-                </label>
-                <input
-                  type="text"
-                  placeholder="Spanish translation"
-                  value={newTranslations.es}
-                  onChange={(e) =>
-                    handleTranslationChange("es", e.target.value)
-                  }
-                  className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
-                />
-              </div>
-              <div className="space-y-3">
-                <label className="text-sm text-[var(--text-muted)]">
-                  French
-                </label>
-                <input
-                  type="text"
-                  placeholder="French translation"
-                  value={newTranslations.fr}
-                  onChange={(e) =>
-                    handleTranslationChange("fr", e.target.value)
-                  }
-                  className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
-                />
-              </div>
-              <div className="space-y-3">
-                <label className="text-sm text-[var(--text-muted)]">
-                  German
-                </label>
-                <input
-                  type="text"
-                  placeholder="German translation"
-                  value={newTranslations.de}
-                  onChange={(e) =>
-                    handleTranslationChange("de", e.target.value)
-                  }
-                  className="w-full bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] px-4 py-3 rounded-lg text-base transition-all focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-10"
-                />
-              </div>
-            </div>
+            </form>
 
             <div className="flex justify-end">
               <button
@@ -177,7 +190,14 @@ export default function Dashboard() {
                                   <input
                                     key={lang}
                                     type="text"
-                                    value={translation.translations[lang] || ""}
+                                    value={
+                                      (
+                                        translation.translations as Record<
+                                          Language,
+                                          string
+                                        >
+                                      )[lang] || ""
+                                    }
                                     onChange={(e) =>
                                       updateTranslation(
                                         translation.id,
