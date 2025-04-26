@@ -5,6 +5,7 @@ import { Language } from "../src/constants/languages";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useState } from "react";
 import Navigation from "../src/components/Navigation";
+import { Translation } from "../src/types/Translation";
 
 export default function Dashboard() {
   const {
@@ -12,10 +13,10 @@ export default function Dashboard() {
     updateTranslation,
     reorderTranslations,
     addTranslation,
+    deleteTranslation,
   } = useTranslation();
 
   const [newKeyword, setNewKeyword] = useState("");
-
   const [newTranslations, setNewTranslations] = useState({
     en: "",
     es: "",
@@ -37,15 +38,12 @@ export default function Dashboard() {
       newKeyword &&
       Object.values(newTranslations).some((val) => val.trim() !== "")
     ) {
-      // filter out only the non‐empty entries:
-      // build this filtered map once…
       const filtered: Partial<Record<Language, string>> = {};
       (["en", "es", "fr", "de"] as Language[]).forEach((lang) => {
         const t = newTranslations[lang];
         if (t.trim()) filtered[lang] = t;
       });
 
-      // then:
       addTranslation(newKeyword, filtered);
 
       setNewKeyword("");
@@ -58,6 +56,10 @@ export default function Dashboard() {
       ...prev,
       [lang]: value,
     }));
+  };
+
+  const handelDeleteTranslation = (translation: Translation) => {
+    deleteTranslation(translation.id);
   };
 
   return (
@@ -181,8 +183,16 @@ export default function Dashboard() {
                           className="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg"
                         >
                           <div className="flex-1">
-                            <div className="text-xl font-bold text-[var(--foreground)] mb-4">
-                              {translation.keyword}
+                            <div className="text-xl font-bold text-[var(--foreground)] mb-4 flex justify-between">
+                              <span>{translation.keyword}</span>
+                              <button
+                                onClick={() =>
+                                  handelDeleteTranslation(translation)
+                                }
+                                className="bg-[var(--primary)] text-[var(--background)] px-6 py-3 rounded-lg text-base font-semibold transition-all hover:bg-[var(--primary-light)] hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-50 cursor-pointer"
+                              >
+                                Delete
+                              </button>
                             </div>
                             <div className="grid grid-cols-4 gap-4">
                               {(["en", "es", "fr", "de"] as Language[]).map(
