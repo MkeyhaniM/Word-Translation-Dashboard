@@ -7,6 +7,7 @@ import Navigation from "./src/components/Navigation";
 export default function Home() {
   const [typingText, setTypingText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const words = ["Modern", "Efficient", "Smart", "Advanced"];
   const typingSpeed = 150;
   const pauseDuration = 2000;
@@ -62,7 +63,7 @@ export default function Home() {
             <ul className="space-y-3 text-[var(--text-muted)]">
               <li className="flex items-center">
                 <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-3"></span>
-                Multi-language support
+                Write end to end test
               </li>
               <li className="flex items-center">
                 <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-3"></span>
@@ -75,6 +76,10 @@ export default function Home() {
               <li className="flex items-center">
                 <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-3"></span>
                 Version control
+              </li>
+              <li className="flex items-center">
+                <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-3"></span>
+                Multi-language support
               </li>
             </ul>
           </div>
