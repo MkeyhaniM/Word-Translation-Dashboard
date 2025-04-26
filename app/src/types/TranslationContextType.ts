@@ -11,4 +11,5 @@ export interface TranslationContextType {
   ) => void;
   updateTranslation: (id: string, lang: Language, text: string) => void;
   reorderTranslations: (newOrder: Translation[]) => void;
+  deleteTranslation: (id: string) => void;
 }
