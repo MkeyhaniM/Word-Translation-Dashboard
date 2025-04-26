@@ -5,6 +5,7 @@ import { TranslationContextType } from "../types/TranslationContextType";
 import { Translation } from "../types/Translation";
 import { Language } from "../constants/languages";
 import { defaultTranslations } from "../constants/defaultTranslations";
+
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined
 );
@@ -16,8 +17,6 @@ export function TranslationProvider({
 }) {
   const [translations, setTranslations] = useState<Translation[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState<Language>("en");
-
-  console.log(translations);
 
   useEffect(() => {
     const storedTranslations = localStorage.getItem("translations");
@@ -60,6 +59,12 @@ export function TranslationProvider({
     localStorage.setItem("translations", JSON.stringify(updatedTranslations));
   };
 
+  const deleteTranslation = (translation: string) => {
+    const updatedTranslations = translations.filter((t) => t.id != translation);
+    setTranslations(updatedTranslations);
+    localStorage.setItem("translations", JSON.stringify(updatedTranslations));
+  };
+
   const reorderTranslations = (newOrder: Translation[]) => {
     setTranslations(newOrder);
     localStorage.setItem("translations", JSON.stringify(newOrder));
@@ -74,6 +79,7 @@ export function TranslationProvider({
         addTranslation,
         updateTranslation,
         reorderTranslations,
+        deleteTranslation,
       }}
     >
       {children}
